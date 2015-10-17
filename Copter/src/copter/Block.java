@@ -17,11 +17,25 @@ public class Block {
         
     }
     
-    public Block(int xPosGiven, int yLocGiven, int lengthGiven, int widthGiven){
+    public Block(int xPosGiven, int panelHeight, boolean isBottom, int widthGiven){
         width = widthGiven;
         xLoc = width * xPosGiven;
-        yLoc = yLocGiven;
-        length = lengthGiven;
+        length = getHeight(panelHeight);
+        if(!isBottom){
+            yLoc = 0;
+        }else{
+            yLoc = panelHeight - length - 29;
+        }
+        
+    }
+    
+    // Getter method for randum numbers
+    private int getHeight(int x){
+        int min = x / 10;
+        int max = (x / 4) + (x / 20);
+        max = max - (min - 1); //set max
+        int randomNum = min + (int)(Math.random()*max); //grab random num
+        return randomNum; // retrun number
     }
     
     public Color getC() {

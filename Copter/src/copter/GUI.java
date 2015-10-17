@@ -1,5 +1,8 @@
 package copter;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,10 +14,6 @@ package copter;
  * @author tecnologic
  */
 public class GUI extends javax.swing.JFrame {
-
-    /**
-     * Creates new form GUI
-     */
     public GUI() {
         initComponents();
     }
@@ -53,8 +52,16 @@ public class GUI extends javax.swing.JFrame {
         copterPanel1.setMinimumSize(new java.awt.Dimension(500, 450));
         copterPanel1.setPreferredSize(new java.awt.Dimension(100, 50));
         copterPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                copterPanel1MousePressed(evt);
+            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 copterPanel1MouseClicked(evt);
+            }
+        });
+        copterPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                copterPanel1KeyPressed(evt);
             }
         });
 
@@ -62,7 +69,7 @@ public class GUI extends javax.swing.JFrame {
         copterPanel1.setLayout(copterPanel1Layout);
         copterPanel1Layout.setHorizontalGroup(
             copterPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 524, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         copterPanel1Layout.setVerticalGroup(
             copterPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,13 +143,13 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(copterPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+            .addComponent(copterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(copterPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                .addComponent(copterPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -154,10 +161,18 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void copterPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_copterPanel1MouseClicked
-        // TODO add your handling code here:
         copterPanel1.shiftBlocks();
         copterPanel1.repaint();
     }//GEN-LAST:event_copterPanel1MouseClicked
+
+    private void copterPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_copterPanel1KeyPressed
+        //copterPanel1.shiftBlocks();
+        //copterPanel1.repaint();
+    }//GEN-LAST:event_copterPanel1KeyPressed
+
+    private void copterPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_copterPanel1MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_copterPanel1MousePressed
 
     /**
      * @param args the command line arguments
