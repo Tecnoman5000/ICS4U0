@@ -20,7 +20,7 @@ public class Block {
     public Block(int xPosGiven, int panelHeight, boolean isBottom, int widthGiven){
         width = widthGiven;
         xLoc = width * xPosGiven;
-        length = getHeight(panelHeight);
+        length = getHeight(panelHeight, xPosGiven);
         if(!isBottom){
             yLoc = 0;
         }else{
@@ -30,11 +30,12 @@ public class Block {
     }
     
     // Getter method for randum numbers
-    private int getHeight(int x){
-        int min = x / 10;
-        int max = (x / 4) + (x / 20);
+    private int getHeight(int panelHeight, int xPos){
+        int min = panelHeight / 10;
+        int max = (panelHeight / 4) + (panelHeight / 20);
         max = max - (min - 1); //set max
         int randomNum = min + (int)(Math.random()*max); //grab random num
+        
         return randomNum; // retrun number
     }
     

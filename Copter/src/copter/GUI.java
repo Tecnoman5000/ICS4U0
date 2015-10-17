@@ -161,8 +161,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void copterPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_copterPanel1MouseClicked
-        copterPanel1.shiftBlocks();
-        copterPanel1.repaint();
+
     }//GEN-LAST:event_copterPanel1MouseClicked
 
     private void copterPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_copterPanel1KeyPressed

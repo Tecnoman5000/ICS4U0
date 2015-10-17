@@ -9,9 +9,7 @@ import javax.swing.JPanel;
 public class CopterPanel extends JPanel{
     int panelWidth = 500;
     int panelHeight = 450;
-    int numBlocks = 20;
-    Block[] blocksTop = new Block[numBlocks];
-    Block[] blocksBottom = new Block[numBlocks]; 
+    int numBlocks = 25;
     Block[] blocks = new Block[numBlocks*2];
     
     Thread blocksThread;
@@ -20,7 +18,6 @@ public class CopterPanel extends JPanel{
         super();
         MoveBlocks mBlocks = new MoveBlocks();
         blocksThread =  new Thread(mBlocks);
-        //thisPanel = this;
         
         this.setSize(panelWidth, panelHeight);
         buildBlocks();
@@ -78,6 +75,7 @@ public class CopterPanel extends JPanel{
         }
     }
     
+    // Thread Class
     public class MoveBlocks implements Runnable{
         public void run(){
             while(true){
@@ -87,7 +85,7 @@ public class CopterPanel extends JPanel{
                 repaint();
                 try {
                     // Sleep Thread
-                    Thread.sleep(250);
+                    Thread.sleep(100);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(CopterPanel.class.getName()).log(Level.SEVERE, null, ex);
                     ex.printStackTrace();
