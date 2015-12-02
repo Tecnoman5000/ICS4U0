@@ -22,7 +22,7 @@ public class RectangleDetection {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        setTestFile();
+        //setTestFile();
         
         int[][] points = getPointsFile("points.txt");
         
@@ -35,7 +35,7 @@ public class RectangleDetection {
         System.out.println(isAbove(recs) + " " + isBelow(recs) + " " 
                 + isLeft(recs) + " " + isRight(recs));
         
-        if(!isAbove(recs) || !isBelow(recs) || !isLeft(recs) || !isRight(recs)){
+        if(!(isAbove(recs) || isBelow(recs) || isLeft(recs) || isRight(recs))){
             System.out.println("Are Interecting");
         }else{
             System.out.println("Are NOT Interecting");
