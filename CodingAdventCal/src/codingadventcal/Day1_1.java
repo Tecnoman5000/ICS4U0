@@ -16,23 +16,103 @@ import java.util.Scanner;
  * @author tecnologic
  */
 public class Day1_1 {
-
+            
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args){
         // TODO code application logic here
-        /*ArrayList<Integer> d1Results = new ArrayList<>();
-        d1Results = dayOne("d1.txt");
+        ArrayList<Integer> d1Results = dayOne("d1.txt");
+        System.out.println("----------- Day One ------------");
         System.out.println("End Level: " + d1Results.get(0));
-        System.out.println("Pos: " + d1Results.get(1));*/
+        System.out.println("Pos: " + d1Results.get(1));
         
-        dayTwo("d2.txt");
+        ArrayList<Integer> d2Results = dayTwo("d2.txt");
+        System.out.println("----------- Day Two ------------");
+        System.out.println("Total Paper Needed: " + d2Results.get(0));
+        System.out.println("Total Ribbon Needed: " + d2Results.get(1));
         
+        System.out.println("----------- Day Three ------------");
+        ArrayList<Integer> d3Results = dayThree("d3.txt");
     }
+    
+    public static ArrayList<Integer> dayThree(String fileName){
+        ArrayList<Integer> results = new ArrayList<>();
+        ArrayList<Character> directions = new ArrayList<>();
+        String text = "";
+        try{
+            File inputFile = new File(fileName);
+            Scanner input = new Scanner(inputFile);
+            text = input.next();
+        }catch(FileNotFoundException e){
+            System.out.println(e);
+        }
+        
+        for(int i=0; i < text.length(); i++){
+            directions.add(text.charAt(i));
+        }
+        System.out.println("Number of Directions: " + directions.size());
+        
+        ArrayList<int[]> locs = new ArrayList<>();
+        int houses = 0;
+        for(char move : directions){
+            if(locs.isEmpty()){
+                System.out.println("Locs is Empty");
+                int[] initLoc = {0,0};
+                locs.add(calcMove(initLoc, move));
+                houses++;
+            }else{
+                int[] current = calcMove(locs.get(locs.size()-1), move);
+                System.out.println(locs.contains(current) + " vs " + containsLoc(current, locs));
+                if(!locs.contains(current)){
+                    locs.add(current);
+                    houses++;
+                }
+            }
+            //System.out.println("Num House: " + houses);
+            
+        }
+        System.out.println("Houses w/ > 0 presents: " + houses);
+        
+        return results;
+    }
+    
+    public static boolean containsLoc(int[] current, ArrayList locs){
+        boolean contains = false;
+        ArrayList<int []> givenLocs = locs;
+        for(int[] loc : givenLocs){
+            System.out.println(loc[0] + "," + loc[1] +" vs " + current[0] + "," + current[1]);
+            if(loc[0] == current[0] && loc[1] == current[1]){
+                contains = true;
+            }
+        }
+        return contains;
+    }
+    
+    public static int[] calcMove(int[] loc, char move){
+        int[] previous = loc;
+        System.out.print("Previous: " + Arrays.toString(previous));
+        if(move == '<'){
+            previous[0]--;
+        }
+        if(move == '>'){
+            previous[0]++;
+        }
+        if(move == '^'){
+            previous[1]++;
+        }
+        if(move == 'v'){
+            previous[1]--;
+        }
+        System.out.println(" Move: " + move + " Current: " 
+            + Arrays.toString(previous));
+        return previous;
+    }
+    
     public static ArrayList<Integer> dayTwo(String fileName){
         ArrayList<Integer> results = new ArrayList<>();
         ArrayList<Integer> dimensions = new ArrayList<>();
+        String output = "";
         try{
             File inputFile = new File(fileName);
             Scanner input = new Scanner(inputFile);
@@ -53,13 +133,13 @@ public class Day1_1 {
                     int value = dimensions.get(dimensions.size()-i);
                     values[i-1] = value;
                 }
-                System.out.println(line + " : " + Arrays.toString(values));
+                output += (line + " : " + Arrays.toString(values) + "\n");
             }
         }catch(FileNotFoundException e){
             System.out.println(e);
         }
         
-        System.out.println("Number of Values: " + dimensions.size());
+        output += ("Number of Values: " + dimensions.size() + "\n");
         
         int[][] dimensionsArray = new int[dimensions.size()/3][3];
         for(int i=0; i<dimensionsArray.length*3; i += 3){
@@ -68,7 +148,7 @@ public class Day1_1 {
                 dimensionsArray[i/3][d] = dimensions.get(index);
             }
         }
-        System.out.println("Number of presents: " + dimensionsArray.length);
+        output += ("Number of presents: " + dimensionsArray.length + "\n");
         
         int totalWrap = 0;
         int totalRibbon = 0;
@@ -96,8 +176,6 @@ public class Day1_1 {
             output += "\n";
         }*/
         
-        System.out.println("Total Paper Needed: " + totalWrap);
-        System.out.println("Total Ribbon Needed: " + totalRibbon);
         return results;
     }
     
