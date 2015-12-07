@@ -24,7 +24,7 @@ public class Challenges {
      */
     public static void main(String[] args){
         // TODO code application logic here
-        ArrayList<Integer> d1Results = dayOne("d1.txt");
+        /*ArrayList<Integer> d1Results = dayOne("d1.txt");
         System.out.println("----------- Day One ------------");
         System.out.println("End Level: " + d1Results.get(0));
         System.out.println("Pos: " + d1Results.get(1));
@@ -41,7 +41,120 @@ public class Challenges {
         System.out.println("----------- Day Four ------------");
         ArrayList<Integer> d4Results = dayFour("ckczppom");
         System.out.println("Answer 1: " + d4Results.get(0));
-        System.out.println("Answer 2: " + d4Results.get(1));
+        System.out.println("Answer 2: " + d4Results.get(1));*/
+        
+        System.out.println("----------- Day Five ------------");
+        ArrayList<Integer> d5Results = dayFive("d5.txt");
+    }
+    
+    public static ArrayList<Integer> dayFive(String fileName){
+        ArrayList<Integer> results = new ArrayList<>();
+        ArrayList<String> strings = new ArrayList<>();
+        
+        try{
+            File inputFile = new File(fileName);
+            Scanner input = new Scanner(inputFile);
+            while(input.hasNext()){
+                strings.add(input.nextLine());
+            }
+        }catch(FileNotFoundException e){
+            System.out.println(e);
+        }
+        
+        int nicePhrases = 0;
+        for(String phrase : strings){
+            if(!hasRestricted(phrase) && hasVowels(phrase) && hasPair(phrase)){
+                nicePhrases++;
+            }
+        }
+        results.add(nicePhrases);
+        System.out.println(nicePhrases);
+        
+        nicePhrases = 0;
+        for(String phrase : strings){
+            if(hasRepPairs(phrase) && hasRepLetter(phrase)){
+                nicePhrases++;
+            }
+        }
+        results.add(nicePhrases);
+        System.out.println(nicePhrases);
+        
+        return results;
+    }
+    
+    public static boolean hasRepPairs(String input){
+        boolean hasRepPair = false;
+        ArrayList<String> pairs = new ArrayList<>();
+        for(int l=1; l < input.length(); l++){
+            pairs.add(input.substring(l-1, l+1));
+        }
+        //System.out.println(pairs.toString());
+        
+        for(String pair : pairs){
+            int numTimes = 0;
+            for(String pairCompare : pairs){
+                if(pair.equals(pairCompare)){
+                    numTimes++;
+                }
+            }
+            if(numTimes >= 2){
+                hasRepPair = true;
+            }
+        }
+        //System.out.println(hasRepPair);
+        return hasRepPair;
+    }
+    
+    public static boolean hasRepLetter(String input){
+        boolean hasRep = false;
+        ArrayList<String> couplets = new ArrayList<>();
+        System.out.println(input);
+        for(int l=2; l < input.length(); l++){
+            couplets.add(input.substring(l-2, l+1));
+        }
+        System.out.println(couplets.toString());
+        
+        for(String couplet : couplets){
+            if(couplet.substring(0, 1).equals(couplet.substring(2, 3))){
+                hasRep = true;
+            }
+        }
+        System.out.println(hasRep);
+        return hasRep;
+    }
+    
+    public static boolean hasVowels(String input){
+        int vowelCnt = 0;
+        for(char letter : input.toCharArray()){
+            if(letter == 'a' || letter == 'e' || letter == 'i'
+                    || letter == 'o' || letter == 'u'){
+                vowelCnt++;
+            }
+        }
+        return vowelCnt >= 3;
+    }
+    
+    public static boolean hasPair(String input){
+        boolean hasPair = false;
+        for(int l=1; l < input.length(); l++){
+             if(input.charAt(l) == input.charAt(l-1)){
+                 hasPair = true;
+             }
+        }
+        return hasPair;
+    }
+    
+    public static boolean hasRestricted(String input){
+        boolean hasRestricted = false;
+        String[] restrictions = {"ab", "cd", "pq", "xy"};
+        for(int l=1; l < input.length(); l++){
+            for(String r : restrictions){
+                if(input.substring(l-1, l+1).contains(r)){
+                    hasRestricted = true;
+                }
+            }
+        }
+        return hasRestricted;
     }
     
     public static ArrayList<Integer> dayFour(String input){
@@ -51,16 +164,16 @@ public class Challenges {
         boolean ansFnd1 = false;
         boolean ansFnd2 = false;
         int index = 1;
-        while(!ansFnd1 && !ansFnd2){
+        while(!ansFnd1 || !ansFnd2){
             stringMD5 = getMD5(input + index);
-            if(stringMD5.substring(0, 5).equals("00000")){
+            if(stringMD5.substring(0, 5).equals("00000") && !ansFnd1){
                 results.add(index);
-                System.out.println(index);
+                //System.out.println(index);
                 ansFnd1 = true;
             }
             if(stringMD5.substring(0, 6).equals("000000")){
                 results.add(index);
-                System.out.println(index);
+                //System.out.println(index);
                 ansFnd2 = true;
             }
             if(index%1000 == 0){
