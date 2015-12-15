@@ -1,5 +1,7 @@
 
 import java.awt.Color;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -43,6 +45,7 @@ public class Browser extends javax.swing.JFrame {
         urlField = new javax.swing.JTextField();
         goButton = new javax.swing.JButton();
         colorPanel1 = new ColorPanel();
+        randomButtom = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -81,6 +84,18 @@ public class Browser extends javax.swing.JFrame {
             }
         });
 
+        randomButtom.setText("Random");
+        randomButtom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                randomButtomMouseClicked(evt);
+            }
+        });
+        randomButtom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                randomButtomActionPerformed(evt);
+            }
+        });
+
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
 
@@ -89,6 +104,11 @@ public class Browser extends javax.swing.JFrame {
         openMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 openMenuItemMouseClicked(evt);
+            }
+        });
+        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuItemActionPerformed(evt);
             }
         });
         fileMenu.add(openMenuItem);
@@ -162,6 +182,10 @@ public class Browser extends javax.swing.JFrame {
                 .addComponent(goButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(colorPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(randomButtom)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +195,9 @@ public class Browser extends javax.swing.JFrame {
                     .addComponent(backButton)
                     .addComponent(urlField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(goButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(randomButtom)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(colorPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -212,18 +238,52 @@ public class Browser extends javax.swing.JFrame {
 
     private void urlFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlFieldActionPerformed
         // TODO add your handling code here:
+        if(!urlField.getText().equals(history.get(currentIndex).getLink())){
+            currentIndex = history.size();
+            this.setNewPage(urlField.getText()); // add new page to list
+            this.setPanelColor(history.get(currentIndex).getContents()); // set new panel color
+            if(currentIndex == 0){
+                this.backButton.setEnabled(false);
+            }else{
+                this.backButton.setEnabled(true); // enable back button
+            }
+        }
     }//GEN-LAST:event_urlFieldActionPerformed
 
     private void openMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openMenuItemMouseClicked
         // TODO add your handling code here:
-        String output = "";
-        for(WebPage page : history){
-            output += page.toString() + "\n";
-        }
-        System.out.println(output);
+        // Apperently Useless, refer to ActionPerformed
     }//GEN-LAST:event_openMenuItemMouseClicked
 
-    public void setPanelColor(Color color){
+    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        // TODO add your handling code here:
+        System.out.println("clicked");
+        String output = "";
+        output = history.stream().map((page) -> page.toString() + "\n").reduce(output, String::concat);
+        System.out.println(output);
+    }//GEN-LAST:event_openMenuItemActionPerformed
+
+    private void randomButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomButtomActionPerformed
+        // TODO add your handling code here:currentIndex = history.size();
+    }//GEN-LAST:event_randomButtomActionPerformed
+
+    private void randomButtomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_randomButtomMouseClicked
+        // TODO add your handling code here:
+        currentIndex = history.size();
+        this.setNewPage(this.getRandUrl()); // add new page to list
+        this.urlField.setText(this.history.get(currentIndex).getLink());
+        this.setPanelColor(history.get(currentIndex).getContents()); // set new panel color
+        if(currentIndex == 0){
+            this.backButton.setEnabled(false);
+        }else{
+            this.backButton.setEnabled(true); // enable back button
+        }
+    }//GEN-LAST:event_randomButtomMouseClicked
+
+    private void setPage(){
+        
+    }
+    private void setPanelColor(Color color){
         this.colorPanel1.setCurrentColor(color);
         this.colorPanel1.repaint();
     }
@@ -234,7 +294,12 @@ public class Browser extends javax.swing.JFrame {
     
     private Color getColor(){
         Random rand = new Random();
-        return new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
+        return new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+    }
+    
+    private String getRandUrl(){
+        SecureRandom random = new SecureRandom();
+        return "www." + new BigInteger(50, random).toString(32) + ".ca";
     }
     /**
      * @param args the command line arguments
@@ -287,6 +352,7 @@ public class Browser extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JButton randomButtom;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JTextField urlField;

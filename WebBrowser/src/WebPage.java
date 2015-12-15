@@ -38,6 +38,6 @@ public class WebPage {
     
     public String toString(){
         
-        return "Link: " + link + " Color: " + contents.toString();
+        return "Link: " + link + "\n\tColor: " + contents.toString();
     }
 }
