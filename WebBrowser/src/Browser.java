@@ -226,7 +226,7 @@ public class Browser extends javax.swing.JFrame {
         // Check if url is different
         if(!urlField.getText().equals(history.get(currentIndex).getLink())){
             currentIndex = history.size();
-            this.setNewPage(urlField.getText()); // add new page to list
+            history.add(new WebPage(urlField.getText(), getColor())); // add new page to list
             this.setPanelColor(history.get(currentIndex).getContents()); // set new panel color
             if(currentIndex == 0){
                 this.backButton.setEnabled(false);
@@ -240,7 +240,7 @@ public class Browser extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!urlField.getText().equals(history.get(currentIndex).getLink())){
             currentIndex = history.size();
-            this.setNewPage(urlField.getText()); // add new page to list
+            history.add(new WebPage(urlField.getText(), getColor())); // add new page to list
             this.setPanelColor(history.get(currentIndex).getContents()); // set new panel color
             if(currentIndex == 0){
                 this.backButton.setEnabled(false);
@@ -270,7 +270,7 @@ public class Browser extends javax.swing.JFrame {
     private void randomButtomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_randomButtomMouseClicked
         // TODO add your handling code here:
         currentIndex = history.size();
-        this.setNewPage(this.getRandUrl()); // add new page to list
+        history.add(new WebPage(this.getRandUrl(), getColor())); // add new page to list
         this.urlField.setText(this.history.get(currentIndex).getLink());
         this.setPanelColor(history.get(currentIndex).getContents()); // set new panel color
         if(currentIndex == 0){
@@ -280,16 +280,12 @@ public class Browser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_randomButtomMouseClicked
 
-    private void setPage(){
-        
-    }
     private void setPanelColor(Color color){
         this.colorPanel1.setCurrentColor(color);
         this.colorPanel1.repaint();
     }
     
     private void setNewPage(String url){
-        history.add(new WebPage(url, getColor()));
     }
     
     private Color getColor(){
